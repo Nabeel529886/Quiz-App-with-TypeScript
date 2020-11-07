@@ -14,10 +14,6 @@ const useStyles = makeStyles(theme => ({
       display: "flex",
       flexDirection: "column",
     },
-    quizcardContainer: {
-      margin: "0px",
-      padding: "0px",
-    },
     quizappHeading: {
       marginTop: "60px",
       marginBottom: '40px',
@@ -73,6 +69,24 @@ const useStyles = makeStyles(theme => ({
         marginTop: '100px',
       },
     },
+    quizcardContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: "center",
+      alignItems: 'center',
+    },
+    nextQuestionBtn: {
+      padding: '10px 25px',
+      width: '50%',
+      fontSize: '1.5rem',
+      border: "2px solid darkblue",
+      borderRadius: "20px",
+      marginTop: "20px",
+      "&:hover": {
+        backgroundColor: 'darkblue',
+        color: "white",
+      },
+      },
 }))
 
 
@@ -146,14 +160,15 @@ const App: React.FC = () =>  {
           <Button disabled={catID === null? true: false } onClick={getData} className={classes.beginBtn}>Begin</Button>
         </Container> 
         :
-        <Container>
+        <Container className={classes.quizcardContainer}>
           <QuizQuestion 
             questionNum={questNumber + 1}
             question={quizQuestions[questNumber].question}
             answers = {quizQuestions[questNumber].answers} 
             callback={checkAnswer} 
             userAnswer={userAnswers? userAnswers[questNumber]: undefined}/>
-          <Button onClick={nextQuestion}>Next Question</Button>
+
+          <Button onClick={nextQuestion} disabled={userAnswers[questNumber]? false: true} className={classes.nextQuestionBtn}>Next Question</Button>
         </Container>
       }
     </Container>
